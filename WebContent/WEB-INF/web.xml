@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>tp1</display-name>
+
+<welcome-file-list>
+	<welcome-file>index.jsp</welcome-file>
+</welcome-file-list>
+
+<session-config>
+	<session-timeout>40</session-timeout>
+</session-config>
+
+<jsp-config>
+	<jsp-property-group>
+		<url-pattern>*.jsp</url-pattern>
+		<include-prelude>/inc/taglibs.jsp</include-prelude>
+	</jsp-property-group>
+	<jsp-property-group>
+        <description>Config. de l'encodage des pages JSP</description>
+        <url-pattern>*.jsp</url-pattern>
+        <page-encoding>UTF-8</page-encoding>
+    </jsp-property-group>
+</jsp-config>
+
+<!-- filtres -->
+
+<filter>
+	<filter-name>Set Character Encoding</filter-name>
+	<filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
+	<init-param>
+		<param-name>encoding</param-name>
+		<param-value>UTF-8</param-value>
+	</init-param>
+	<init-param>
+		<param-name>ignore</param-name>
+        <param-value>false</param-value>
+	</init-param>
+</filter>
+
+<filter-mapping>
+	<filter-name>Set Character Encoding</filter-name>
+	<url-pattern>/*</url-pattern>
+</filter-mapping>
+
+<!-- Page d'accueil -->
+
+<servlet>
+	<servlet-name>index</servlet-name>
+	<servlet-class>com.thom.tp1.servlets.IndexServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+	<servlet-name>index</servlet-name>
+	<url-pattern>/index</url-pattern>
+</servlet-mapping>
+
+
+<!-- Appel des pages de formulaire -->
+
+<servlet>
+	<servlet-name>formCustomers</servlet-name>
+	<servlet-class>com.thom.tp1.servlets.CreateCustomerServlet</servlet-class>
+	<init-param>
+		<param-name>pathFiles</param-name>
+		<param-value>/files/</param-value>
+	</init-param>
+	<multipart-config>
+		<location>c:/</location>
+		<max-file-size>1048576</max-file-size>
+		<max-request-size>5242880</max-request-size>
+		<file-size-threshold>104858</file-size-threshold>
+	</multipart-config>
+</servlet>
+<servlet-mapping>
+	<servlet-name>formCustomers</servlet-name>
+	<url-pattern>/client</url-pattern>
+</servlet-mapping>
+
+<servlet>
+	<servlet-name>formOrder</servlet-name>
+	<servlet-class>com.thom.tp1.servlets.CreateOrderServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+	<servlet-name>formOrder</servlet-name>
+	<url-pattern>/commande</url-pattern>
+</servlet-mapping>
+
+<!-- Listes de résultats -->
+
+<servlet>
+	<servlet-name>ListeCmd</servlet-name>
+	<servlet-class>com.thom.tp1.servlets.ListOrderServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+	<servlet-name>ListeCmd</servlet-name>
+	<url-pattern>/listeCommandes</url-pattern>
+</servlet-mapping>
+
+<servlet>
+	<servlet-name>ListeCli</servlet-name>
+	<servlet-class>com.thom.tp1.servlets.ListCustomerServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+	<servlet-name>ListeCli</servlet-name>
+	<url-pattern>/listeClients</url-pattern>
+</servlet-mapping>
+
+<!-- Supressions -->
+
+<servlet>
+	<servlet-name>Delete</servlet-name>
+	<servlet-class>com.thom.tp1.servlets.DeleteServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+	<servlet-name>Delete</servlet-name>
+	<url-pattern>/suppression</url-pattern>
+</servlet-mapping>
+
+</web-app>
